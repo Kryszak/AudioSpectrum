@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>MWindow.h</itemPath>
+      <itemPath>Mp3Player.h</itemPath>
+      <itemPath>kissfft/kiss_fft.h</itemPath>
+      <itemPath>kissfft/kiss_fftr.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <itemPath>MWindow.ui</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>MWindow.cpp</itemPath>
+      <itemPath>Mp3Player.cpp</itemPath>
+      <itemPath>kissfft/kiss_fft.c</itemPath>
+      <itemPath>kissfft/kiss_fftr.c</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="4">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lmpg123</linkerOptionItem>
+            <linkerOptionItem>-lao</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="MWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mp3Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mp3Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fft.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fft.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fftr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fftr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="4">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lmpg123</linkerOptionItem>
+            <linkerOptionItem>-lao</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="MWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mp3Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Mp3Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fft.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fft.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fftr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="kissfft/kiss_fftr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
