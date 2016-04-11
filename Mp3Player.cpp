@@ -36,6 +36,11 @@ Mp3Player::~Mp3Player() {
     ao_shutdown();
 }
 
+float Mp3Player::scale(kiss_fft_scalar val){
+    int g = 0;
+    return val < 0 ? val*(1/32768.0f ) : val*(1/32767.0f);
+}
+
 void Mp3Player::run() {
     int err;
     err = mpg123_open(mh, path); //otwarcie pliku; sprawdzic, co zwraca, zlapac wyjatek
@@ -56,9 +61,9 @@ void Mp3Player::run() {
 
     device = ao_open_live(driver, &format, NULL); //otwarcie odtwarzania
     
-    //ZMIENIC DO BUFFER SIZE
+   
     int samples = bufferSize / 2; //bufor probek do fft
-
+    
     //bufory do fft
     kiss_fft_cpx in[samples];
     kiss_fft_cpx out[samples];
@@ -70,16 +75,17 @@ void Mp3Player::run() {
     }
 
     cfg = kiss_fft_alloc(samples, 0, 0, 0); //alokacja pamieci buforow ff
-
+    
     //glowna petla odtwarzajaca i przetwarzajaca dane
     while (mpg123_read(mh, buffer, bufferSize, &done) == MPG123_OK) {
         while (paused); //dopoki flaga pauzy jest aktywna, zapetlony
 
         int index = 0;
-        
+
         if(channels == 2){
             for (int i = 0; i < bufferSize; i += 2 ) {
-                in[index].r = (buffer[i]);
+                in[index].r = (buffer[i] | buffer[i+1] << 8);
+                cout <<  (buffer[i] | buffer[i+1] << 8) << endl;
                 index++;
             }
         }
@@ -87,7 +93,14 @@ void Mp3Player::run() {
         kiss_fft(cfg, in, out); //wykonaj fft
         
         for (int i = 0; i < samples / 2; i++) {
-            magnitude[i] = 10 * log10(out[i].r * out[i].r + out[i].i * out[i].i);  
+            float real = scale(out[i].r);// * samples;
+            float imaginary = scale(out[i].i);// * samples;
+           /* float max;
+            if(real > imaginary) max = real;
+            else max = imaginary;
+            real /= max;
+            imaginary /= max;*/
+            magnitude[i] = 10 * log10(real * real + imaginary * imaginary);  
         }
 
         emit spectrumReady(); //wyslij sygnal gotowosci danych

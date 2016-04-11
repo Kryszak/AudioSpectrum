@@ -22,6 +22,7 @@
 #include<QBrush>
 #include<QPen>
 #include<QFont>
+#include<QColor>
 
 using namespace std;
 

@@ -45,12 +45,15 @@ void MWindow::drawSpectrum() {
     scene->clear(); //wyczysc scene
     int j = 20; //startowy X pierwszego slupka
     //ustawianie koloru rysujacego dlugopisu
-    QPen pen(Qt::black);
-    pen.setWidth(10);
+    float r = 255, g = 0, b = 0;
+    QColor color(r, g, b);
+    QPen pen(color);
+    int band_width = widget.graphicsView->width()/8;
+    pen.setWidth(band_width);
     int bands = 8; //ilosc slupkow
     double spectrum[bands]; //tablica danych do rysowania
     int bandLimit[] = {                     //tablica logarytmicznych odstepow do sumowania WYWALIC PRAZEK 0
-       0, 1, 5, 10, 23, 49, 108, 235, 512
+       1, 2, 5, 10, 23, 49, 108, 235, 512
     };
     
     
@@ -79,11 +82,14 @@ void MWindow::drawSpectrum() {
     }
     */
     //rysowanie slupkow
-    for (int i = 1; i < bands; i++) {
+    for (int i = 0; i < bands; i++) {
         scene->addLine(j, 211, j, 211 - spectrum[i], pen);
-        j += 30;
+        j += band_width;
+        r += 60;
+        color.setHsv(r, 255, 255);
+        pen.setColor(color);
     }
-
+    r = 255;
 }
 
 //rozpoczyna/kontynuuje odtwarzanie
