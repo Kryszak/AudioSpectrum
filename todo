@@ -1,3 +1,2 @@
-*filtracja bandow
-*klasa led rpi
-*netbeans cross compiler
+char - 1 bajt
+1 probka -> 2 * char == 1 kanal (4 kolejne chary DO SPRAWDZENIA)

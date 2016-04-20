@@ -41,6 +41,28 @@ float Mp3Player::scale(kiss_fft_scalar val){
     return val < 0 ? val*(1/32768.0f ) : val*(1/32767.0f);
 }
 
+/*
+ *Zsumowanie lewego i prawego kanalu
+ *Format PCM:
+ * 2 kolejne bajty - lewy kanal, 2 nastepne - prawy kanal 
+ */
+void Mp3Player::demux(char* in, short out[]){
+    short left[1024];
+    short right[1024];
+    int index = 0;
+    
+    for(int i=0; i < 4096; i+=4){
+        left[index] = in[i] | (in[i+1] << 8);
+        right[index] = in[i+2] | (in[i+3] << 8);
+        index++;
+    }
+    
+    for(int i = 0; i < 1024; i++){
+        out[i] = left[i] + right[i];
+    }
+    
+}
+
 void Mp3Player::run() {
     int err;
     err = mpg123_open(mh, path); //otwarcie pliku; sprawdzic, co zwraca, zlapac wyjatek
@@ -62,13 +84,15 @@ void Mp3Player::run() {
     device = ao_open_live(driver, &format, NULL); //otwarcie odtwarzania
     
    
-    int samples = bufferSize / 2; //bufor probek do fft
+    int samples = bufferSize / 4; //ilosc probek przekazywanych do fft
     
     //bufory do fft
     kiss_fft_cpx in[samples];
     kiss_fft_cpx out[samples];
     kiss_fft_cfg cfg;
-
+    
+    short signal[1024];
+    
     //zerowanie czesci urojonej buforow
     for (int i = 0; i < samples; i++) {
         in[i].i = 0;
@@ -79,27 +103,18 @@ void Mp3Player::run() {
     //glowna petla odtwarzajaca i przetwarzajaca dane
     while (mpg123_read(mh, buffer, bufferSize, &done) == MPG123_OK) {
         while (paused); //dopoki flaga pauzy jest aktywna, zapetlony
-
-        int index = 0;
-
-        if(channels == 2){
-            for (int i = 0; i < bufferSize; i += 2 ) {
-                in[index].r = (buffer[i] | buffer[i+1] << 8);
-                cout <<  (buffer[i] | buffer[i+1] << 8) << endl;
-                index++;
-            }
+                       
+        demux((char*)buffer, signal);
+        
+        for(int i = 0; i < samples; i++){
+            in[i].r = signal[i];
         }
-
+        
         kiss_fft(cfg, in, out); //wykonaj fft
         
         for (int i = 0; i < samples / 2; i++) {
-            float real = scale(out[i].r);// * samples;
-            float imaginary = scale(out[i].i);// * samples;
-           /* float max;
-            if(real > imaginary) max = real;
-            else max = imaginary;
-            real /= max;
-            imaginary /= max;*/
+            float real = scale(out[i].r);
+            float imaginary = scale(out[i].i);
             magnitude[i] = 10 * log10(real * real + imaginary * imaginary);  
         }
 

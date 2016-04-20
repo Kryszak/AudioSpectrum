@@ -33,6 +33,7 @@ public:
     virtual ~Mp3Player();
     void run() Q_DECL_OVERRIDE; //przetwarzanie mp3
     float scale(kiss_fft_scalar);
+    void demux(char*, short[]);
 signals:
     void spectrumReady(); //sygnal gotowosci danych
 private:

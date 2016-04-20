@@ -56,31 +56,16 @@ void MWindow::drawSpectrum() {
        1, 2, 5, 10, 23, 49, 108, 235, 512
     };
     
-    
     //sumuj czestotliwosci, skaluj
     for (int i = 0; i < bands; i++) {
         
         for (int q = bandLimit[i]; q < bandLimit[i+1]; q++) {
             spectrum[i] += player->magnitude[q];
         }
-  
-        
+         
         spectrum[i] = spectrum[i]/(bandLimit[i+1] - bandLimit[i]); //skalowanie SPRAWDZIC
-        //spectrum[i] = 10 * log10(spectrum[i]); //OK, SPRAWDZIC RMS(/32768)
-        //cout << spectrum[i] << ", ";
     }
-    //cout << endl;
-    /*
-    int max = 0;
-    for(int i = 0; i < bands; i ++){
-        if(spectrum[i] > max) max = spectrum[i];
-    }
-    
-    for(int i = 0; i < bands; i++){
-        spectrum[i] /= max;
-        spectrum[i] *= 100;
-    }
-    */
+   
     //rysowanie slupkow
     for (int i = 0; i < bands; i++) {
         scene->addLine(j, 211, j, 211 - spectrum[i], pen);
