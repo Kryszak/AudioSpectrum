@@ -16,6 +16,7 @@
 #include"kissfft/kiss_fft.h"
 #include"kissfft/kiss_fftr.h"
 #include<math.h>
+#include<QMessageBox>
 
 #define BITS 8
 

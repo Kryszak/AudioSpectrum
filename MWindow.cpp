@@ -10,14 +10,14 @@
 MWindow::MWindow() {
     widget.setupUi(this); //ustawienie UI z creatora
     this->setWindowTitle("Audio Spectrum v0.1"); //tytul okienka
-    this->player = NULL; 
+    this->player = NULL;
 
     widget.fileNameLabel->setText("No file selected"); //startowy napis w polu nazwy pliku
-    
+
     //ustawianie okienka rysujacego
     scene = new QGraphicsScene;
     scene->setSceneRect(0, 0, widget.graphicsView->width() - 3, widget.graphicsView->height() - 3); //wielkosc okienka do rysowania
-    widget.graphicsView->setScene(scene); 
+    widget.graphicsView->setScene(scene);
 
     connect(widget.LoadButton, SIGNAL(clicked()), this, SLOT(findFile())); //wybor pliku
     connect(widget.PlayButton, SIGNAL(clicked()), this, SLOT(play())); //sygnal play
@@ -32,7 +32,7 @@ MWindow::~MWindow() {
 //otwiera okienko wyboru pliku, po czym laduje go do playera
 
 void MWindow::findFile() {
-    if(!this->playerPlaying){
+    if (!this->playerPlaying) {
         fileName = dialog.getOpenFileName(this, tr("Open file"), "/home/kryszak", tr("Music files(*.mp3)")); //okienko wyboru pliku
         QFileInfo f(fileName);
         widget.fileNameLabel->setText(f.fileName()); //ustawienie nazwy pliku w pasku
@@ -48,29 +48,41 @@ void MWindow::drawSpectrum() {
     float r = 255, g = 0, b = 0;
     QColor color(r, g, b);
     QPen pen(color);
-    int band_width = widget.graphicsView->width()/8;
+    int band_width = widget.graphicsView->width() / 8;
     pen.setWidth(band_width);
     int bands = 8; //ilosc slupkow
     double spectrum[bands]; //tablica danych do rysowania
-    int bandLimit[] = {                     //tablica logarytmicznych odstepow do sumowania WYWALIC PRAZEK 0
-       1, 2, 5, 10, 23, 49, 108, 235, 512
+    int bandLimit[] = {//tablica logarytmicznych odstepow do sumowania
+        1, 2, 5, 10, 23, 49, 108, 235, 512
     };
-    
-    //sumuj czestotliwosci, skaluj
+
+    //sumuj czestotliwosci
     for (int i = 0; i < bands; i++) {
-        
-        for (int q = bandLimit[i]; q < bandLimit[i+1]; q++) {
+
+        for (int q = bandLimit[i]; q < bandLimit[i + 1]; q++) {
             spectrum[i] += player->magnitude[q];
         }
-         
-        spectrum[i] = spectrum[i]/(bandLimit[i+1] - bandLimit[i]); //skalowanie SPRAWDZIC
+        if (spectrum[i] < 0) spectrum[i] = 0;
     }
-   
+    
+    //przeskalowanie wartosci do zakresu <0,8>
+    int max = 0;
+
+    for (int i = 0; i < bands; i++) {
+        if (spectrum[i] > max) max = spectrum[i];
+    }
+
+    for (int i = 0; i < bands; i++) {
+        spectrum[i] /= max;
+        spectrum[i] = round(spectrum[i] * 8);
+    }
+
+
     //rysowanie slupkow
     for (int i = 0; i < bands; i++) {
-        scene->addLine(j, 211, j, 211 - spectrum[i], pen);
-        j += band_width;
-        r += 60;
+        scene->addLine(j, 211, j, 211 - spectrum[i] * widget.graphicsView->height()/8, pen);
+        j += 50;
+        r += 30;
         color.setHsv(r, 255, 255);
         pen.setColor(color);
     }
@@ -78,6 +90,7 @@ void MWindow::drawSpectrum() {
 }
 
 //rozpoczyna/kontynuuje odtwarzanie
+
 void MWindow::play() {
     if (!playerPlaying) {
         cout << "Playing!" << endl;
@@ -94,12 +107,14 @@ void MWindow::play() {
 }
 
 //pauzuje odtwarzanie
+
 void MWindow::pause() {
     cout << "Pause!" << endl;
     player->paused = true; //ustawienie flagi pauzy
 }
 
 //zatrzymuje odtwarzanie
+
 void MWindow::stop() {
     //jezeli player odtwarza, zatrzymaj
     if (playerPlaying) {
@@ -110,6 +125,7 @@ void MWindow::stop() {
 }
 
 //czysci zmienne boolowskie kontrolujace odtwarzacz
+
 void MWindow::finishedPlaying() {
     playerPlaying = false; //flaga odtwarzania
     scene->clear(); //wyczyszczenie sceny

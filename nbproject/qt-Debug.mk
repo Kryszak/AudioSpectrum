@@ -462,6 +462,8 @@ moc_MWindow.cpp: ui_MWindow.h \
 		/usr/include/qt5/QtCore/qthread.h \
 		kissfft/kiss_fft.h \
 		kissfft/kiss_fftr.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -538,6 +540,60 @@ moc_Mp3Player.cpp: /usr/include/qt5/QtCore/QObject \
 		/usr/include/qt5/QtCore/qthread.h \
 		kissfft/kiss_fft.h \
 		kissfft/kiss_fftr.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
 		Mp3Player.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Mp3Player.h -o moc_Mp3Player.cpp
 
@@ -721,6 +777,8 @@ build/Debug/GNU-Linux-x86/MWindow.o: MWindow.cpp MWindow.h \
 		/usr/include/qt5/QtCore/qthread.h \
 		kissfft/kiss_fft.h \
 		kissfft/kiss_fftr.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -797,39 +855,28 @@ build/Debug/GNU-Linux-x86/Mp3Player.o: Mp3Player.cpp Mp3Player.h \
 		/usr/include/qt5/QtCore/qthread.h \
 		kissfft/kiss_fft.h \
 		kissfft/kiss_fftr.h \
-		ui_MWindow.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtCore/qvariant.h \
-		/usr/include/qt5/QtCore/qmap.h \
-		/usr/include/qt5/QtCore/qpair.h \
-		/usr/include/qt5/QtCore/qdebug.h \
-		/usr/include/qt5/QtCore/qhash.h \
-		/usr/include/qt5/QtCore/qtextstream.h \
-		/usr/include/qt5/QtCore/qiodevice.h \
-		/usr/include/qt5/QtCore/qlocale.h \
-		/usr/include/qt5/QtCore/qshareddata.h \
-		/usr/include/qt5/QtCore/qvector.h \
-		/usr/include/qt5/QtCore/qpoint.h \
-		/usr/include/qt5/QtCore/qset.h \
-		/usr/include/qt5/QtCore/qcontiguouscache.h \
-		/usr/include/qt5/QtCore/qstringlist.h \
-		/usr/include/qt5/QtCore/qdatastream.h \
-		/usr/include/qt5/QtCore/qregexp.h \
-		/usr/include/qt5/QtCore/qstringmatcher.h \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		/usr/include/qt5/QtWidgets/qdialog.h \
 		/usr/include/qt5/QtWidgets/qwidget.h \
 		/usr/include/qt5/QtGui/qwindowdefs.h \
 		/usr/include/qt5/QtGui/qwindowdefs_win.h \
 		/usr/include/qt5/QtCore/qmargins.h \
 		/usr/include/qt5/QtCore/qrect.h \
 		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
 		/usr/include/qt5/QtGui/qpaintdevice.h \
 		/usr/include/qt5/QtGui/qpalette.h \
 		/usr/include/qt5/QtGui/qcolor.h \
 		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
 		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
 		/usr/include/qt5/QtGui/qmatrix.h \
 		/usr/include/qt5/QtGui/qpolygon.h \
 		/usr/include/qt5/QtGui/qregion.h \
@@ -839,19 +886,33 @@ build/Debug/GNU-Linux-x86/Mp3Player.o: Mp3Player.cpp Mp3Player.h \
 		/usr/include/qt5/QtGui/qimage.h \
 		/usr/include/qt5/QtGui/qpixmap.h \
 		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
 		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
 		/usr/include/qt5/QtGui/qfont.h \
 		/usr/include/qt5/QtGui/qfontmetrics.h \
 		/usr/include/qt5/QtGui/qfontinfo.h \
 		/usr/include/qt5/QtWidgets/qsizepolicy.h \
 		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
 		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
 		/usr/include/qt5/QtCore/qurl.h \
 		/usr/include/qt5/QtCore/qurlquery.h \
 		/usr/include/qt5/QtCore/qfile.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		ui_MWindow.h \
+		/usr/include/qt5/QtCore/QVariant \
+		/usr/include/qt5/QtWidgets/QAction \
+		/usr/include/qt5/QtWidgets/qaction.h \
 		/usr/include/qt5/QtGui/qicon.h \
 		/usr/include/qt5/QtWidgets/qactiongroup.h \
 		/usr/include/qt5/QtWidgets/QApplication \
@@ -864,7 +925,6 @@ build/Debug/GNU-Linux-x86/Mp3Player.o: Mp3Player.cpp Mp3Player.h \
 		/usr/include/qt5/QtWidgets/QButtonGroup \
 		/usr/include/qt5/QtWidgets/qbuttongroup.h \
 		/usr/include/qt5/QtWidgets/QDialog \
-		/usr/include/qt5/QtWidgets/qdialog.h \
 		/usr/include/qt5/QtWidgets/QFrame \
 		/usr/include/qt5/QtWidgets/qframe.h \
 		/usr/include/qt5/QtWidgets/QGraphicsView \
@@ -1069,6 +1129,8 @@ build/Debug/GNU-Linux-x86/main.o: main.cpp /usr/include/qt5/QtWidgets/QApplicati
 		/usr/include/qt5/QtCore/qthread.h \
 		kissfft/kiss_fft.h \
 		kissfft/kiss_fftr.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \

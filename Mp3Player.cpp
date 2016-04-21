@@ -45,6 +45,7 @@ float Mp3Player::scale(kiss_fft_scalar val){
  *Zsumowanie lewego i prawego kanalu
  *Format PCM:
  * 2 kolejne bajty - lewy kanal, 2 nastepne - prawy kanal 
+ * Zsumowanie obu kanalow
  */
 void Mp3Player::demux(char* in, short out[]){
     short left[1024];
@@ -68,7 +69,8 @@ void Mp3Player::run() {
     err = mpg123_open(mh, path); //otwarcie pliku; sprawdzic, co zwraca, zlapac wyjatek
     
     if (err == -1){
-        cout << " Ulomnosc pliku readers.h nie pozwolila na otwarcie pliku, prosze sprobowac ponownie" << endl;
+        QMessageBox box;
+        box.critical(0, "Error", "Cannot find file(readers.h error)");
     }
     
     mpg123_getformat(mh, &rate, &channels, &encoding); //sprawdzenie formatu pliku
@@ -91,7 +93,7 @@ void Mp3Player::run() {
     kiss_fft_cpx out[samples];
     kiss_fft_cfg cfg;
     
-    short signal[1024];
+    short signal[samples];
     
     //zerowanie czesci urojonej buforow
     for (int i = 0; i < samples; i++) {
@@ -112,7 +114,7 @@ void Mp3Player::run() {
         
         kiss_fft(cfg, in, out); //wykonaj fft
         
-        for (int i = 0; i < samples / 2; i++) {
+        for (int i = 0; i < samples; i++) {
             float real = scale(out[i].r);
             float imaginary = scale(out[i].i);
             magnitude[i] = 10 * log10(real * real + imaginary * imaginary);  
