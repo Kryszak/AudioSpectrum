@@ -36,9 +36,9 @@ Mp3Player::~Mp3Player() {
     ao_shutdown();
 }
 
-float Mp3Player::scale(kiss_fft_scalar val){
+float Mp3Player::scale(kiss_fft_scalar val) {
     int g = 0;
-    return val < 0 ? val*(1/32768.0f ) : val*(1/32767.0f);
+    return val < 0 ? val * (1 / 32768.0f) : val * (1 / 32767.0f);
 }
 
 /*
@@ -47,35 +47,39 @@ float Mp3Player::scale(kiss_fft_scalar val){
  * 2 kolejne bajty - lewy kanal, 2 nastepne - prawy kanal 
  * Zsumowanie obu kanalow
  */
-void Mp3Player::demux(char* in, short out[]){
+void Mp3Player::demux(char* in, short out[]) {
     short left[1024];
     short right[1024];
     int index = 0;
-    
-    for(int i=0; i < 4096; i+=4){
-        left[index] = in[i] | (in[i+1] << 8);
-        right[index] = in[i+2] | (in[i+3] << 8);
+
+    for (int i = 0; i < 4096; i += 4) {
+        left[index] = in[i] | (in[i + 1] << 8);
+        right[index] = in[i + 2] | (in[i + 3] << 8);
         index++;
     }
-    
-    for(int i = 0; i < 1024; i++){
+
+    for (int i = 0; i < 1024; i++) {
         out[i] = left[i] + right[i];
     }
+
+}
+
+void Mp3Player::pcmToReal(short in[], float out[]){
     
 }
 
 void Mp3Player::run() {
     int err;
     err = mpg123_open(mh, path); //otwarcie pliku; sprawdzic, co zwraca, zlapac wyjatek
-    
-    if (err == -1){
+
+    if (err == -1) {
         QMessageBox box;
         box.critical(0, "Error", "Cannot find file(readers.h error)");
     }
-    
+
     mpg123_getformat(mh, &rate, &channels, &encoding); //sprawdzenie formatu pliku
-    
-    
+
+
     //czary ustawiajace parametry do odtwarzania ao
     format.bits = mpg123_encsize(encoding) * BITS;
     format.rate = rate;
@@ -84,40 +88,41 @@ void Mp3Player::run() {
     format.matrix = 0;
 
     device = ao_open_live(driver, &format, NULL); //otwarcie odtwarzania
-    
-   
+
+
     int samples = bufferSize / 4; //ilosc probek przekazywanych do fft
-    
+
     //bufory do fft
     kiss_fft_cpx in[samples];
     kiss_fft_cpx out[samples];
     kiss_fft_cfg cfg;
-    
+
     short signal[samples];
-    
+
     //zerowanie czesci urojonej buforow
     for (int i = 0; i < samples; i++) {
         in[i].i = 0;
     }
 
     cfg = kiss_fft_alloc(samples, 0, 0, 0); //alokacja pamieci buforow ff
-    
+
     //glowna petla odtwarzajaca i przetwarzajaca dane
     while (mpg123_read(mh, buffer, bufferSize, &done) == MPG123_OK) {
         while (paused); //dopoki flaga pauzy jest aktywna, zapetlony
-                       
-        demux((char*)buffer, signal);
+
+        demux((char*) buffer, signal); 
         
-        for(int i = 0; i < samples; i++){
-            in[i].r = signal[i];
-        }
-        
-        kiss_fft(cfg, in, out); //wykonaj fft
-        
+        //wrzucenie probek, przemnozenie przez okno Hanna
         for (int i = 0; i < samples; i++) {
-            float real = scale(out[i].r);
-            float imaginary = scale(out[i].i);
-            magnitude[i] = 10 * log10(real * real + imaginary * imaginary);  
+            in[i].r = signal[i] * 0.5f * (1 - cos(2 * M_PI * i / (samples - 1)));
+        }
+
+        kiss_fft(cfg, in, out); //wykonaj fft
+
+        for (int i = 0; i < samples; i++) {
+            float real = (out[i].r);
+            float imaginary = (out[i].i);
+            magnitude[i] = 10 * log10(real * real + imaginary * imaginary);
         }
 
         emit spectrumReady(); //wyslij sygnal gotowosci danych

@@ -53,7 +53,7 @@ void MWindow::drawSpectrum() {
     int bands = 8; //ilosc slupkow
     double spectrum[bands]; //tablica danych do rysowania
     int bandLimit[] = {//tablica logarytmicznych odstepow do sumowania
-        1, 2, 5, 10, 23, 49, 108, 235, 512
+        1, 2, 4, 8, 16, 32, 64, 128, 256
     };
 
     //sumuj czestotliwosci
@@ -62,25 +62,15 @@ void MWindow::drawSpectrum() {
         for (int q = bandLimit[i]; q < bandLimit[i + 1]; q++) {
             spectrum[i] += player->magnitude[q];
         }
-        if (spectrum[i] < 0) spectrum[i] = 0;
+        spectrum[i] /= (bandLimit[i+1] - bandLimit[i]);
+        //spectrum[i] = player->magnitude[bandLimit[i]];
     }
     
-    //przeskalowanie wartosci do zakresu <0,8>
-    int max = 0;
-
-    for (int i = 0; i < bands; i++) {
-        if (spectrum[i] > max) max = spectrum[i];
-    }
-
-    for (int i = 0; i < bands; i++) {
-        spectrum[i] /= max;
-        spectrum[i] = round(spectrum[i] * 8);
-    }
 
 
     //rysowanie slupkow
     for (int i = 0; i < bands; i++) {
-        scene->addLine(j, 211, j, 211 - spectrum[i] * widget.graphicsView->height()/8, pen);
+        scene->addLine(j, 211, j, (int) 211 - spectrum[i], pen);
         j += 50;
         r += 30;
         color.setHsv(r, 255, 255);
