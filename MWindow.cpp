@@ -43,7 +43,7 @@ void MWindow::drawSpectrum() {
 
 
     scene->clear(); //wyczysc scene
-    int j = 20; //startowy X pierwszego slupka
+    int bandPosition = 20; //startowy X pierwszego slupka
     //ustawianie koloru rysujacego dlugopisu
     float r = 255, g = 0, b = 0;
     QColor color(r, g, b);
@@ -51,7 +51,7 @@ void MWindow::drawSpectrum() {
     int band_width = widget.graphicsView->width() / 8;
     pen.setWidth(band_width);
     int bands = 8; //ilosc slupkow
-    double spectrum[bands]; //tablica danych do rysowania
+    float spectrum[bands]; //tablica danych do rysowania
     int bandLimit[] = {//tablica logarytmicznych odstepow do sumowania
         1, 2, 4, 8, 16, 32, 64, 128, 256
     };
@@ -60,18 +60,16 @@ void MWindow::drawSpectrum() {
     for (int i = 0; i < bands; i++) {
 
         for (int q = bandLimit[i]; q < bandLimit[i + 1]; q++) {
-            spectrum[i] += player->magnitude[q];
+            spectrum[i] += player->fft_result[q].power;
         }
-        spectrum[i] /= (bandLimit[i+1] - bandLimit[i]);
-        //spectrum[i] = player->magnitude[bandLimit[i]];
+        spectrum[i] /= (bandLimit[i + 1] - bandLimit[i]);
+        spectrum[i] = 20 * log10(sqrt(spectrum[i])/32768);
     }
-    
-
 
     //rysowanie slupkow
     for (int i = 0; i < bands; i++) {
-        scene->addLine(j, 211, j, (int) 211 - spectrum[i], pen);
-        j += 50;
+        scene->addLine(bandPosition, 211, bandPosition, 211 - spectrum[i], pen);
+        bandPosition += 50;
         r += 30;
         color.setHsv(r, 255, 255);
         pen.setColor(color);

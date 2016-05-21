@@ -45,13 +45,15 @@ OBJECTS_DIR   = build/Debug/GNU-Linux-x86/
 
 ####### Files
 
-SOURCES       = MWindow.cpp \
+SOURCES       = FrequencyBin.cpp \
+		MWindow.cpp \
 		Mp3Player.cpp \
 		kissfft/kiss_fft.c \
 		kissfft/kiss_fftr.c \
 		main.cpp moc_MWindow.cpp \
 		moc_Mp3Player.cpp
-OBJECTS       = build/Debug/GNU-Linux-x86/MWindow.o \
+OBJECTS       = build/Debug/GNU-Linux-x86/FrequencyBin.o \
+		build/Debug/GNU-Linux-x86/MWindow.o \
 		build/Debug/GNU-Linux-x86/Mp3Player.o \
 		build/Debug/GNU-Linux-x86/kiss_fft.o \
 		build/Debug/GNU-Linux-x86/kiss_fftr.o \
@@ -275,7 +277,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0 || mkdir -p build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents MWindow.h Mp3Player.h kissfft/kiss_fft.h kissfft/kiss_fftr.h build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents MWindow.cpp Mp3Player.cpp kissfft/kiss_fft.c kissfft/kiss_fftr.c main.cpp build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents MWindow.ui build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && (cd `dirname build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0` && $(TAR) Audio_Spectrum1.0.0.tar Audio_Spectrum1.0.0 && $(COMPRESS) Audio_Spectrum1.0.0.tar) && $(MOVE) `dirname build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0`/Audio_Spectrum1.0.0.tar.gz . && $(DEL_FILE) -r build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents FrequencyBin.h MWindow.h Mp3Player.h kissfft/kiss_fft.h kissfft/kiss_fftr.h build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents FrequencyBin.cpp MWindow.cpp Mp3Player.cpp kissfft/kiss_fft.c kissfft/kiss_fftr.c main.cpp build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && $(COPY_FILE) --parents MWindow.ui build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0/ && (cd `dirname build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0` && $(TAR) Audio_Spectrum1.0.0.tar Audio_Spectrum1.0.0 && $(COMPRESS) Audio_Spectrum1.0.0.tar) && $(MOVE) `dirname build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0`/Audio_Spectrum1.0.0.tar.gz . && $(DEL_FILE) -r build/Debug/GNU-Linux-x86/Audio_Spectrum1.0.0
 
 
 clean:compiler_clean 
@@ -464,6 +466,7 @@ moc_MWindow.cpp: ui_MWindow.h \
 		kissfft/kiss_fftr.h \
 		/usr/include/qt5/QtWidgets/QMessageBox \
 		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		FrequencyBin.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -594,6 +597,7 @@ moc_Mp3Player.cpp: /usr/include/qt5/QtCore/QObject \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		FrequencyBin.h \
 		Mp3Player.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include Mp3Player.h -o moc_Mp3Player.cpp
 
@@ -614,6 +618,9 @@ compiler_lex_clean:
 compiler_clean: compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+build/Debug/GNU-Linux-x86/FrequencyBin.o: FrequencyBin.cpp FrequencyBin.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o build/Debug/GNU-Linux-x86/FrequencyBin.o FrequencyBin.cpp
 
 build/Debug/GNU-Linux-x86/MWindow.o: MWindow.cpp MWindow.h \
 		ui_MWindow.h \
@@ -779,6 +786,7 @@ build/Debug/GNU-Linux-x86/MWindow.o: MWindow.cpp MWindow.h \
 		kissfft/kiss_fftr.h \
 		/usr/include/qt5/QtWidgets/QMessageBox \
 		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		FrequencyBin.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -909,6 +917,7 @@ build/Debug/GNU-Linux-x86/Mp3Player.o: Mp3Player.cpp Mp3Player.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		FrequencyBin.h \
 		ui_MWindow.h \
 		/usr/include/qt5/QtCore/QVariant \
 		/usr/include/qt5/QtWidgets/QAction \
@@ -1131,6 +1140,7 @@ build/Debug/GNU-Linux-x86/main.o: main.cpp /usr/include/qt5/QtWidgets/QApplicati
 		kissfft/kiss_fftr.h \
 		/usr/include/qt5/QtWidgets/QMessageBox \
 		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		FrequencyBin.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \

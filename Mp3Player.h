@@ -17,6 +17,7 @@
 #include"kissfft/kiss_fftr.h"
 #include<math.h>
 #include<QMessageBox>
+#include"FrequencyBin.h"
 
 #define BITS 8
 
@@ -27,9 +28,8 @@ class Mp3Player : public QThread {
 public:
     const char* path = NULL; //sciezka do pliku
     volatile bool paused = false; //flaga pauzy odtwarzacza
-    float *magnitude; //bufer danych przetworzonych fft
     size_t bufferSize; //rozmiar bufora
-    
+    FrequencyBin fft_result[1024];
     Mp3Player();
     virtual ~Mp3Player();
     void run() Q_DECL_OVERRIDE; //przetwarzanie mp3

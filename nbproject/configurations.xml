@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>FrequencyBin.h</itemPath>
       <itemPath>MWindow.h</itemPath>
       <itemPath>Mp3Player.h</itemPath>
       <itemPath>kissfft/kiss_fft.h</itemPath>
@@ -17,6 +18,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>FrequencyBin.cpp</itemPath>
       <itemPath>MWindow.cpp</itemPath>
       <itemPath>Mp3Player.cpp</itemPath>
       <itemPath>kissfft/kiss_fft.c</itemPath>
@@ -54,6 +56,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="FrequencyBin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FrequencyBin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MWindow.h" ex="false" tool="3" flavor2="0">
@@ -105,6 +111,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="FrequencyBin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FrequencyBin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="MWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="MWindow.h" ex="false" tool="3" flavor2="0">

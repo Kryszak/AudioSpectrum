@@ -20,13 +20,11 @@ Mp3Player::Mp3Player() {
     //ustawienie rozmiarow buforow
     bufferSize = 2048;
     buffer = new unsigned char[bufferSize];
-    magnitude = new float[bufferSize / 4]; //ZMIENIC DO /2
 }
 
 Mp3Player::~Mp3Player() {
     //usuniecie buforow
     delete buffer;
-    delete magnitude;
     //zamkniecie uchwytow ao i mpg123
     ao_close(device);
     mpg123_close(mh);
@@ -37,7 +35,6 @@ Mp3Player::~Mp3Player() {
 }
 
 float Mp3Player::scale(kiss_fft_scalar val) {
-    int g = 0;
     return val < 0 ? val * (1 / 32768.0f) : val * (1 / 32767.0f);
 }
 
@@ -64,8 +61,8 @@ void Mp3Player::demux(char* in, short out[]) {
 
 }
 
-void Mp3Player::pcmToReal(short in[], float out[]){
-    
+void Mp3Player::pcmToReal(short in[], float out[]) {
+
 }
 
 void Mp3Player::run() {
@@ -110,8 +107,8 @@ void Mp3Player::run() {
     while (mpg123_read(mh, buffer, bufferSize, &done) == MPG123_OK) {
         while (paused); //dopoki flaga pauzy jest aktywna, zapetlony
 
-        demux((char*) buffer, signal); 
-        
+        demux((char*) buffer, signal);
+
         //wrzucenie probek, przemnozenie przez okno Hanna
         for (int i = 0; i < samples; i++) {
             in[i].r = signal[i] * 0.5f * (1 - cos(2 * M_PI * i / (samples - 1)));
@@ -122,7 +119,8 @@ void Mp3Player::run() {
         for (int i = 0; i < samples; i++) {
             float real = (out[i].r);
             float imaginary = (out[i].i);
-            magnitude[i] = 10 * log10(real * real + imaginary * imaginary);
+            fft_result[i].power = (real * real + imaginary * imaginary);
+            fft_result[i].frequency = i * rate / samples;
         }
 
         emit spectrumReady(); //wyslij sygnal gotowosci danych
